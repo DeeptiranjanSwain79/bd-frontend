@@ -42,7 +42,16 @@ const IncomeForm = () => {
     date: formatDateForInput(new Date()),
   });
   const [isLoading, setIsLoading] = useState(false);
-  const incomeCategories = user?.expenses || [];
+
+  const incomeCategories = user?.incomes || [
+    "SALARY",
+    "FREELANCING",
+    "INVESTMENT_RETURNS",
+    "RENTAL_INCOME",
+    "BUSINESS_INCOME",
+    "DIVIDENDS",
+    "CAPITAL_GAINS",
+  ];
 
   const handleAddIncome = () => {
     if (newIncome.source && newIncome.amount > 0) {

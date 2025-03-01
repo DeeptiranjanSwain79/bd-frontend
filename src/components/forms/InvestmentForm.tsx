@@ -38,7 +38,15 @@ const InvestmentForm = () => {
     date: formatDateForInput(new Date()),
   });
   const [isLoading, setIsLoading] = useState(false);
-  const investmentCategories = user.investments;
+  const investmentCategories = user?.investments || [
+    "STOCKS",
+    "FD",
+    "MF",
+    "REAL_ESTATE",
+    "GOLD",
+    "BONDS",
+    "CRYPTO",
+  ];
 
   const handleAddInvestment = () => {
     if (newInvestment.category && newInvestment.amount > 0) {

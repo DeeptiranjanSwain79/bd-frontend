@@ -41,12 +41,26 @@ const ExpenseForm = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const expenseCategories = user.expenses || [];
+  const expenseCategories = user?.expenses || [
+    "GROCERY",
+    "JEWELLERY",
+    "PHONE_RECHARGE",
+    "UTILITIES",
+    "TRANSPORTATION",
+    "DINING_OUT",
+    "ENTERTAINMENT",
+  ];
 
   const handleAddExpense = () => {
     if (newExpense.name && newExpense.amount > 0) {
       setExpenses([...expenses, newExpense]);
-      setNewExpense({ name: "", amount: 0, category: "", note: "", date: formatDateForInput(new Date()), }); // Reset form
+      setNewExpense({
+        name: "",
+        amount: 0,
+        category: "",
+        note: "",
+        date: formatDateForInput(new Date()),
+      }); // Reset form
     }
   };
 
