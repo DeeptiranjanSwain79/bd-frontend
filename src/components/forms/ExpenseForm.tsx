@@ -43,6 +43,7 @@ const ExpenseForm = () => {
 
   const expenseCategories = user?.expenses || [
     "GROCERY",
+    "SHOPPING",
     "JEWELLERY",
     "PHONE_RECHARGE",
     "UTILITIES",
