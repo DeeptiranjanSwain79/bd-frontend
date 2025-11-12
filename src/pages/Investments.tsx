@@ -1,6 +1,5 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { PrivateAPI } from "../api/client";
 import AreaChartAnalysis, {
   chartDataType,
@@ -9,6 +8,7 @@ import TransactionComponent from "../components/analytics/TransactionComponent";
 import InvestmentForm from "../components/forms/InvestmentForm";
 import TransactionTable from "../components/tables/TransactionTable";
 import { AuthContext, AuthContextType } from "../contexts/contexts";
+import AuthWrapper from "../components/wrapper/AuthWrapper";
 
 const Investments = () => {
   const { setActiveState } = useContext(AuthContext) as AuthContextType;
@@ -32,7 +32,7 @@ const Investments = () => {
         setInvestmentData(data.investments);
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.error || error.message);
+      console.log(error?.response?.data?.error || error.message);
     } finally {
       setLoading(false);
     }
@@ -48,14 +48,17 @@ const Investments = () => {
         setAnalytics(data.result);
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.error || error.message);
+      console.log(
+        error?.response?.data?.error ||
+          "Something went wrong. Please try again later."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Box sx={{ marginTop: { md: "5%", xs: "15%" } }}>
+    <AuthWrapper>
       <InvestmentForm />
       {loading ? (
         <CircularProgress />
@@ -65,25 +68,36 @@ const Investments = () => {
             <AreaChartAnalysis data={analytics} chartType="investment" />
           )}
 
-          <Box
-            sx={{
-              borderRadius: "0.5rem",
-              marginTop: "3rem",
-              padding: "1.8rem",
-              textAlign: "center",
-              mx: { md: 3, xs: 0 },
-              mb: 5,
-            }}
-          >
-            <TransactionComponent type="investment" />
-          </Box>
+          {investmentData?.length > 0 ? (
+            <>
+              <Box
+                sx={{
+                  borderRadius: "0.5rem",
+                  marginTop: "3rem",
+                  padding: "1.8rem",
+                  textAlign: "center",
+                  mx: { md: 3, xs: 0 },
+                  mb: 5,
+                }}
+              >
+                <TransactionComponent type="investment" />
+              </Box>
 
-          {investmentData?.length > 0 && (
-            <TransactionTable data={investmentData} tableType="investment" />
+              <TransactionTable data={investmentData} tableType="investment" />
+            </>
+          ) : (
+            <Typography
+              variant="h6"
+              align="center"
+              color="error"
+              sx={{ mt: 5 }}
+            >
+              No investments found.
+            </Typography>
           )}
         </>
       )}
-    </Box>
+    </AuthWrapper>
   );
 };
 

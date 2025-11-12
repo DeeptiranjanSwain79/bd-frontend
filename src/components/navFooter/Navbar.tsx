@@ -17,7 +17,6 @@ import Sidebar from "./Sidebar";
 import { LogoutOutlined, Menu } from "@mui/icons-material";
 import { AuthContext, AuthContextType } from "../../contexts/contexts";
 import { themeModes } from "../../utils/theme";
-import { LoadingButton } from "@mui/lab";
 import { NavMenuItems } from "./Menu";
 
 const ScrollAppBar = ({ children, window }: any) => {
@@ -125,7 +124,7 @@ const Navbar = () => {
                 BudgetDaddy
               </Typography>
 
-              {NavMenuItems.map((item, index) => (
+              {NavMenuItems(user).map((item, index) => (
                 <Button
                   sx={{
                     color: activeState === item.state ? "#fff" : "text.primary",
@@ -175,22 +174,27 @@ const Navbar = () => {
                     src={`https://ui-avatars.com/api/?name=${user?.name?.replace(
                       " ",
                       "+"
-                    )}`}
-                    alt={`${user.name}`}
+                    )}${
+                      activeState === "profile"
+                        ? "&background=6b0303&color=fff"
+                        : ""
+                    }`}
+                    alt=""
                     onClick={() => navigate("/profile")}
                   />
-                  <LoadingButton
-                    startIcon={<LogoutOutlined />}
-                    variant="contained"
-                    onClick={logout}
-                  >
-                    Log out
-                  </LoadingButton>
 
                   <IconButton sx={{ color: "inherit" }} onClick={onSwitchTheme}>
                     {currentTheme === themeModes.dark && <Brightness7Icon />}
                     {currentTheme === themeModes.light && <Brightness4Icon />}
                   </IconButton>
+
+                  <Button
+                    startIcon={<LogoutOutlined />}
+                    variant="contained"
+                    onClick={logout}
+                  >
+                    Log out
+                  </Button>
                 </>
               )}
             </Stack>

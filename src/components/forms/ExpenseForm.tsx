@@ -15,7 +15,6 @@ import {
 import { motion } from "framer-motion";
 import { useContext, useState } from "react";
 import { PrivateAPI } from "../../api/client";
-import { LoadingButton } from "@mui/lab";
 import { AuthContext, AuthContextType } from "../../contexts/contexts";
 import toast from "react-hot-toast";
 import { formatDateForInput } from "../../utils/formats";
@@ -224,14 +223,14 @@ const ExpenseForm = () => {
           ))}
         </Box>
         {expenses.length > 0 && (
-          <LoadingButton
+          <Button
             sx={{ width: { md: "25%", xs: "40%" }, mt: 3 }}
             onClick={handleSubitExpenses}
             loading={isLoading}
             variant="contained"
           >
             Save
-          </LoadingButton>
+          </Button>
         )}
       </Box>
     </motion.div>

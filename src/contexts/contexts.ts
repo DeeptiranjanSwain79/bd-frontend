@@ -1,18 +1,20 @@
 import { createContext } from "react";
-import { localstorageUser } from "../utils/types";
+import { UserType } from "../utils/types";
 
 export const AuthContext = createContext<unknown>(null);
 export type AuthContextType = {
-    user: localstorageUser;
-    login: (user: localstorageUser) => void;
+    user: UserType;
+    login: (user: UserType) => void;
     logout: () => void;
-    setUser: (user: localstorageUser | null) => void;
+    setUser: (user: UserType | null) => void;
     loading: boolean;
     setLoading: (loading: boolean) => void;
     currentTheme: string;
     setCurrentTheme: (currentTheme: string) => void;
     activeState: string;
     setActiveState: (state: string) => void;
+    isAuthPage: boolean;
+    setIsAuthPage: (isAuthPage: boolean) => void;
 }
 
 export const NavbarContext = createContext<unknown>(null);

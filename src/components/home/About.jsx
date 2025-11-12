@@ -1,6 +1,5 @@
 import { ChevronRight } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
-import { Container, Fade, Grid, Paper, Slide, Typography } from "@mui/material";
+import { Button, Container, Fade, Grid, Paper, Slide, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import aboutBg from "../../assets/aboutBg.jpg";
 
@@ -32,7 +31,7 @@ const About = () => {
                     you're tracking daily expenses, planning for your future, or
                     analyzing your financial trends, we've got you covered.
                   </Typography>
-                  <LoadingButton
+                  <Button
                     endIcon={<ChevronRight />}
                     variant="contained"
                     color="primary"
@@ -40,7 +39,7 @@ const About = () => {
                     onClick={() => navigate("/signin")}
                   >
                     Get Started
-                  </LoadingButton>
+                  </Button>
                 </div>
               </Slide>
             </Grid>

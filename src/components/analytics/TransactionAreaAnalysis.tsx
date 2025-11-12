@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { PrivateAPI } from "../../api/client";
-import toast from "react-hot-toast";
 import {
   Area,
   AreaChart,
@@ -48,7 +47,10 @@ const TransactionAreaAnalysis = () => {
         setAnalysisData(data.result);
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || error.message);
+      console.log(
+        error?.response?.data?.message ||
+          "Something went wrong. Please try again later."
+      );
     } finally {
       setLoading(false);
     }

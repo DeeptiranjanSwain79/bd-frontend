@@ -104,7 +104,7 @@ const AreaChartAnalysis = ({
       }}
     >
       <Typography variant="h6" textAlign={"left"}>
-        Analytics
+        Consultation Fee Analytics
       </Typography>
 
       <Box sx={{ textAlign: "right", width: "100%" }}>

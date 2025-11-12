@@ -15,7 +15,6 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { motion } from "framer-motion";
 import { PrivateAPI } from "../../api/client";
-import { LoadingButton } from "@mui/lab";
 import { AuthContext, AuthContextType } from "../../contexts/contexts";
 import toast from "react-hot-toast";
 import { formatDateForInput } from "../../utils/formats";
@@ -208,14 +207,14 @@ const InvestmentForm = () => {
           ))}
         </Box>
         {investments.length > 0 && (
-          <LoadingButton
+          <Button
             sx={{ width: { md: "25%", xs: "40%" }, mt: 3 }}
             onClick={handleSubitIncomes}
             loading={isLoading}
             variant="contained"
           >
             Save
-          </LoadingButton>
+          </Button>
         )}
       </Box>
     </motion.div>

@@ -1,62 +1,91 @@
-import { ReactNode, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { localstorageUser } from "../utils/types";
-import { CircularProgress } from "@mui/material";
+import { ReactNode, useCallback, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CircularProgress, Box } from "@mui/material";
 import { AuthContext } from "./contexts";
+import { UserType } from "../utils/types";
+
+const PUBLIC_ROUTES = [
+  "/",
+  "/signup",
+  "/signin",
+  "/forgot-password",
+  "/payment-success",
+  "/payment-failed",
+];
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const location = useLocation();
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<localstorageUser | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
   const [currentTheme, setCurrentTheme] = useState("dark");
   const [activeState, setActiveState] = useState("home");
-  const login = (user: localstorageUser) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isAuthPage, setIsAuthPage] = useState(false);
+
+  /** Handle login */
+  const login = (user: UserType) => {
     setUser(user);
     localStorage.setItem("user", JSON.stringify(user));
     setLoading(false);
   };
 
-  const logout = () => {
+  /** Handle logout */
+  const logout = useCallback(() => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
-  };
+    navigate("/signin", { replace: true }); // smoother navigation
+  }, [navigate]);
 
+  /** Initialize user authentication state */
   useEffect(() => {
-    const isPublic = [
-      "/payment-success",
-      "/payment-failed",
-      "/signup",
-      "/signin",
-      "/forgot-password",
-      "/",
-    ].some((path) => window.location.href.includes(path));
+    const currentPath = location.pathname;
+    const isPublic = PUBLIC_ROUTES.includes(currentPath);
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+
     if (isPublic) {
       setLoading(false);
-      return;
+      return; //  stop here for public routes
     }
-    if (user) setLoading(false);
-    if (
-      !user &&
-      localStorage.getItem("user") &&
-      localStorage.getItem("token")
-    ) {
-      setUser(JSON.parse(localStorage.getItem("user") as string));
+
+    if (storedUser && storedToken) {
+      try {
+        const parsedUser = JSON.parse(storedUser) as UserType;
+        setUser(parsedUser);
+      } catch {
+        localStorage.removeItem("user");
+      }
       setLoading(false);
-    } else if (
-      !user &&
-      !localStorage.getItem("user") &&
-      !localStorage.getItem("token") &&
-      !window.location.href.endsWith("/signup")
-    ) {
-      navigate("/signin");
-      setLoading(false);
-    } else if (localStorage.getItem("user") && !localStorage.getItem("token")) {
-      localStorage.removeItem("user");
-      navigate("/signin");
+    } else {
+      //  Only logout if we're on a protected route
+      logout();
       setLoading(false);
     }
-  }, [loading, navigate, user]);
+  }, [location.pathname, logout]);
+
+  /** Track if we're on an auth page */
+  useEffect(() => {
+    const authPaths = ["/signin", "/signup", "/forgot-password"];
+    setIsAuthPage(authPaths.includes(location.pathname));
+  }, [location.pathname]);
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <AuthContext.Provider
@@ -70,10 +99,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         currentTheme,
         setCurrentTheme,
         activeState,
-        setActiveState
+        setActiveState,
+        setIsAuthPage,
       }}
     >
-      {loading ? <CircularProgress /> : children}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -72,7 +72,7 @@ const Sidebar = ({
           MENU
         </Typography>
 
-        {NavMenuItems.map((item, index) => (
+        {NavMenuItems(user).map((item, index) => (
           <ListItemButton
             sx={{
               borderRadius: "10px",

@@ -1,5 +1,4 @@
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -114,6 +113,7 @@ const Login = ({ setCurrentTabIndex }: { setCurrentTabIndex: any }) => {
           signinForm.resetForm();
           localStorage.setItem("token", response.data.token);
           toast.success("Successfully signed in");
+          localStorage.setItem("token", response.data.token as string);
           login(response.data.user);
           navigate("/dashboard");
         }
@@ -190,7 +190,7 @@ const Login = ({ setCurrentTabIndex }: { setCurrentTabIndex: any }) => {
                 />
               </Grid>
               <Grid item xs={12}>
-                <LoadingButton
+                <Button
                   fullWidth
                   variant="contained"
                   sx={{
@@ -201,7 +201,7 @@ const Login = ({ setCurrentTabIndex }: { setCurrentTabIndex: any }) => {
                   loading={loginLoading}
                 >
                   Signin
-                </LoadingButton>
+                </Button>
               </Grid>
               <Grid item xs={12}>
                 <Typography variant="body1" align="center">
@@ -285,6 +285,7 @@ const RegisterAccount = ({
           signupForm.resetForm();
           toast.success("Successfully signed up");
           login(response.data.user);
+          localStorage.setItem("token", response.data.token as string);
           navigate("/dashboard");
         }
       } catch (error: any) {
@@ -382,7 +383,7 @@ const RegisterAccount = ({
               }}
             />
             {error && <p style={{ color: "red" }}>{error}</p>}
-            <LoadingButton
+            <Button
               type="submit"
               variant="contained"
               loading={isLoading}
@@ -394,7 +395,7 @@ const RegisterAccount = ({
               fullWidth
             >
               Register
-            </LoadingButton>
+            </Button>
             <Typography variant="body1" align="center" marginTop={"1rem"}>
               Received an Invitation?{" "}
               <span

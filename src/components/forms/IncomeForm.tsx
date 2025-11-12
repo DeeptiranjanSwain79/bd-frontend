@@ -1,6 +1,5 @@
 import { DeleteOutline } from "@mui/icons-material";
 import AddIcon from "@mui/icons-material/Add";
-import { LoadingButton } from "@mui/lab";
 import {
   Box,
   Button,
@@ -228,14 +227,14 @@ const IncomeForm = () => {
           ))}
         </Box>
         {incomes.length > 0 && (
-          <LoadingButton
+          <Button
             sx={{ width: { md: "25%", xs: "40%" }, mt: 3 }}
             onClick={handleSubitIncomes}
             loading={isLoading}
             variant="contained"
           >
             Save
-          </LoadingButton>
+          </Button>
         )}
       </Box>
     </motion.div>

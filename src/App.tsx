@@ -13,6 +13,7 @@ import Expenses from "./pages/Expenses";
 import Incomes from "./pages/Incomes";
 import Investments from "./pages/Investments";
 import { Toaster } from "react-hot-toast";
+import Profile from "./pages/Profile";
 
 const App = () => {
   const { currentTheme } = useContext(AuthContext) as AuthContextType;
@@ -29,7 +30,7 @@ const App = () => {
         <Route path="/expenses" element={<Expenses />} />
         <Route path="/incomes" element={<Incomes />} />
         <Route path="/investments" element={<Investments />} />
-        {/* <Route path="/profile" element={<Profile />} />  */}
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </ThemeProvider>
