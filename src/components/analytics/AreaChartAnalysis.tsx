@@ -103,8 +103,8 @@ const AreaChartAnalysis = ({
         mb: 5,
       }}
     >
-      <Typography variant="h6" textAlign={"left"}>
-        Consultation Fee Analytics
+      <Typography variant="h6" textTransform={"capitalize"} textAlign={"left"}>
+        {chartType} Analytics
       </Typography>
 
       <Box sx={{ textAlign: "right", width: "100%" }}>

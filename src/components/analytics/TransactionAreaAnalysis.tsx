@@ -47,10 +47,7 @@ const TransactionAreaAnalysis = () => {
         setAnalysisData(data.result);
       }
     } catch (error: any) {
-      console.log(
-        error?.response?.data?.message ||
-          "Something went wrong. Please try again later."
-      );
+      console.log(error);
     } finally {
       setLoading(false);
     }

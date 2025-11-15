@@ -32,7 +32,7 @@ const Investments = () => {
         setInvestmentData(data.investments);
       }
     } catch (error: any) {
-      console.log(error?.response?.data?.error || error.message);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -48,10 +48,7 @@ const Investments = () => {
         setAnalytics(data.result);
       }
     } catch (error: any) {
-      console.log(
-        error?.response?.data?.error ||
-          "Something went wrong. Please try again later."
-      );
+      console.log(error);
     } finally {
       setLoading(false);
     }

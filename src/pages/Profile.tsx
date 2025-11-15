@@ -108,7 +108,7 @@ const Profile = () => {
         expenseCategories: validateCategories(formData.expenseCategories),
         investmentCategories: validateCategories(formData.investmentCategories),
       };
-      console.log(payload);
+      
       const { data, status }: { data: any; status: number } =
         await PrivateAPI.put(`/api/users/${userData._id}`, payload);
 

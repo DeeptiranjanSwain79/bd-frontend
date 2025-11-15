@@ -31,8 +31,8 @@ const Expenses = () => {
       if (data && status === 200) {
         setExpenseData(data.expenses);
       }
-    } catch (error: any) {
-      console.log(error?.response?.data?.error || error.message);
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -48,10 +48,7 @@ const Expenses = () => {
         setAnalytics(data.result);
       }
     } catch (error: any) {
-      console.log(
-        error?.response?.data?.error ||
-          "Something went wrong. Please try again later."
-      );
+      console.log(error);
     } finally {
       setLoading(false);
     }

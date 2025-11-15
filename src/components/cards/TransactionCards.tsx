@@ -7,11 +7,13 @@ import { PrivateAPI } from "../../api/client"; // Adjust the import path
 interface TransactionCardProps {
   transactions: any[];
   type: string;
+  total: number;
 }
 
 const TransactionCards: React.FC<TransactionCardProps> = ({
   transactions,
   type,
+  total = 0,
 }) => {
   const handleDelete = async (id: string) => {
     try {
@@ -35,14 +37,25 @@ const TransactionCards: React.FC<TransactionCardProps> = ({
 
   return (
     <Grid container spacing={2} sx={{ flexWrap: "wrap" }}>
+      <Grid item xs={12}>
+        <Typography variant="h6" sx={{ mb: 2 }}>
+          Total {type.charAt(0).toUpperCase() + type.slice(1)}: ₹
+          {total.toFixed(2)}
+        </Typography>
+      </Grid>
       {transactions.map((transaction, index) => (
         <Grid item xs={12} md={4} key={index}>
-          <Card>
+          <Card
+            elevation={8}
+            sx={{
+              borderRadius: 8,
+            }}
+          >
             <CardContent sx={{ position: "relative" }}>
               <IconButton
                 aria-label="delete"
                 onClick={() => handleDelete(transaction._id)}
-                sx={{ position: "absolute", top: 8, right: 8 }}
+                sx={{ position: "absolute", top: 8, right: 16 }}
               >
                 <Delete />
               </IconButton>
@@ -57,7 +70,7 @@ const TransactionCards: React.FC<TransactionCardProps> = ({
                 {transaction.category?.replace("_", " ")}
               </Typography>
               <Typography variant="body2">
-                Amount: {transaction.amount}
+                Amount: ₹{transaction.amount.toFixed(2)}
               </Typography>
               <Typography variant="body2">
                 Date: {new Date(transaction.date).toLocaleDateString()}

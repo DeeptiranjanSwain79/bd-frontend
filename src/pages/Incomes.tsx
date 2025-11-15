@@ -32,7 +32,7 @@ const Incomes = () => {
         setIncomeData(data.incomes);
       }
     } catch (error: any) {
-      console.log(error?.response?.data?.error || error.message);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -48,10 +48,7 @@ const Incomes = () => {
         setAnalytics(data.result);
       }
     } catch (error: any) {
-      console.log(
-        error?.response?.data?.error ||
-          "Something went wrong. Please try again later."
-      );
+      console.log(error);
     } finally {
       setLoading(false);
     }

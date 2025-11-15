@@ -39,17 +39,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     navigate("/signin", { replace: true }); // smoother navigation
   }, [navigate]);
 
-  /** Initialize user authentication state */
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const isPublic = PUBLIC_ROUTES.includes(currentPath);
+  const checkFunc = useCallback(async () => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
-
-    if (isPublic) {
-      setLoading(false);
-      return; //  stop here for public routes
-    }
 
     if (storedUser && storedToken) {
       try {
@@ -64,7 +56,21 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       logout();
       setLoading(false);
     }
-  }, [location.pathname, logout]);
+  }, [logout]);
+
+  /** Initialize user authentication state */
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const isPublic = PUBLIC_ROUTES.includes(currentPath);
+
+    checkFunc();
+
+    if (isPublic) {
+      setLoading(false);
+    }
+    return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   /** Track if we're on an auth page */
   useEffect(() => {
